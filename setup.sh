@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # =============================================================
-# Shopify App Template - One-Command Setup
+# Shopify App Template (MongoDB) - One-Command Setup
 # =============================================================
 # Chay lenh nay trong Terminal:
 #
-#   curl -fsSL https://raw.githubusercontent.com/sellersmith/shopify-app-template-react-router-sqlite/main/setup.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/sellersmith/shopify-app-template-react-router-mongodb/main/setup.sh | bash
 #
 # Hoac neu da clone repo:
 #
@@ -27,8 +27,8 @@ print_success() { echo -e "${GREEN}  ✓${NC} ${1}"; }
 print_warning() { echo -e "${YELLOW}  ⚠${NC} ${1}"; }
 print_error() { echo -e "${RED}  ✗${NC} ${1}"; }
 
-REPO_URL="https://github.com/sellersmith/shopify-app-template-react-router-sqlite.git"
-PROJECT_DIR="$HOME/projects/shopify-app-template-react-router-sqlite"
+REPO_URL="https://github.com/sellersmith/shopify-app-template-react-router-mongodb.git"
+PROJECT_DIR="$HOME/projects/shopify-app-template-react-router-mongodb"
 
 # --------------------------------------------------
 # 1. Homebrew
@@ -157,13 +157,6 @@ npx prisma generate
 print_success "Prisma client da duoc generate"
 
 # --------------------------------------------------
-# 10. Setup database (SQLite)
-# --------------------------------------------------
-print_step "Setup database..."
-npx prisma migrate deploy
-print_success "Database da duoc setup"
-
-# --------------------------------------------------
 # Done
 # --------------------------------------------------
 echo ""
@@ -176,12 +169,17 @@ echo ""
 echo "  1. Dang nhap Shopify Partner:"
 echo -e "     ${GREEN}shopify auth login${NC}"
 echo ""
-echo "  2. Chay app:"
+echo "  2. Tao file .env va dien DATABASE_URL:"
+echo -e "     ${GREEN}cp .env.example .env${NC}"
+echo ""
+echo -e "     ${YELLOW}DATABASE_URL${NC}=mongodb+srv://user:pass@cluster.mongodb.net/dbname"
+echo ""
+echo "  3. Push database schema:"
+echo -e "     ${GREEN}npx prisma db push${NC}"
+echo ""
+echo "  4. Chay app:"
 echo -e "     ${GREEN}cd $PROJECT_DIR${NC}"
 echo -e "     ${GREEN}npm run dev${NC}"
-echo ""
-echo "  3. Shopify CLI se hoi ban chon store de test."
-echo "     Chon dev store cua team."
 echo ""
 echo -e "  ${YELLOW}Project directory:${NC} $PROJECT_DIR"
 echo ""
